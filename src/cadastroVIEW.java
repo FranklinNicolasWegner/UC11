@@ -9,6 +9,7 @@
  */
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 public class cadastroVIEW extends javax.swing.JFrame {
 
     /**
@@ -158,10 +159,10 @@ public class cadastroVIEW extends javax.swing.JFrame {
             
             ps.executeUpdate();
             
-            System.out.println( "Dados inseridos com sucesso" );
+            JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso" );
         
         }catch(SQLException e){
-            System.out.println("Falha ao inserir dados");        
+            JOptionPane.showMessageDialog(null, "Falha ao inserir dados");        
         }
         
         

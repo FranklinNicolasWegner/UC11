@@ -12,7 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ProdutosDAO {
@@ -23,19 +25,46 @@ public class ProdutosDAO {
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
     public void cadastrarProduto (ProdutosDTO produto){
-        
-        
-        //conn = new conectaDAO().connectDB();
+  
         
         
     }
     
-    public ArrayList<ProdutosDTO> listarProdutos(){
+    public ArrayList<ProdutosDTO> getProdutos(){
         
         return listagem;
     }
     
-    
+       public List<ProdutosDTO> getProduto(){
+       conectaDAO conectadao = new conectaDAO();
+       conectadao.Connection();
+       
+       
+       String sql = "Select produtos.id as id, nome, valor, status from produtos";
+   
+   try{
+       PreparedStatement stmt = conectadao.conn.prepareStatement(sql);
+       
+       ResultSet rs = stmt.executeQuery();
+       List<ProdutosDTO> lista = new ArrayList<>();
+       while(rs.next()){
+           ProdutosDTO produtosdto = new ProdutosDTO();
+           produtosdto.setId(rs.getInt("id"));
+           produtosdto.setNome(rs.getString("nome"));
+           produtosdto.setValor(rs.getInt("valor"));
+           produtosdto.setStatus(rs.getString("status"));
+           
+           lista.add(produtosdto);
+       }
+   return lista;
+   }catch(Exception e){
+       System.out.println(e.getMessage());
+       return null;
+   }
+   
+   
+       
+   }
     
         
 }

@@ -1,5 +1,8 @@
 
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -18,7 +21,7 @@ public class listagemVIEW extends javax.swing.JFrame {
      */
     public listagemVIEW() {
         initComponents();
-        listarProdutos();
+        preencheTabela();
     }
 
     /**
@@ -41,7 +44,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         btnVendas = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         listaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -141,7 +144,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         ProdutosDAO produtosdao = new ProdutosDAO();
         
         //produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+        preencheTabela();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
@@ -201,25 +204,30 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
 
-    private void listarProdutos(){
-        try {
-            ProdutosDAO produtosdao = new ProdutosDAO();
-            
-            DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
-            model.setNumRows(0);
-            
-            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
-            
-            for(int i = 0; i < listagem.size(); i++){
-                model.addRow(new Object[]{
-                    listagem.get(i).getId(),
-                    listagem.get(i).getNome(),
-                    listagem.get(i).getValor(),
-                    listagem.get(i).getStatus()
-                });
-            }
-        } catch (Exception e) {
-        }
-    
-    }
-}
+
+   
+   private void preencheTabela(){
+       ProdutosDAO produtosdao = new ProdutosDAO();
+       
+       List<ProdutosDTO> listarProdutos = produtosdao.getProduto();
+       
+       DefaultTableModel tabelaProdutos = (DefaultTableModel) listaProdutos.getModel();
+       
+       tabelaProdutos.setRowCount(0);
+       
+       for(ProdutosDTO p : listarProdutos) {
+           
+           Object[] obj = new Object[]{
+               p.getId(),
+               p.getNome(),
+               p.getValor(),
+               p.getStatus()
+           };
+       tabelaProdutos.addRow(obj);
+       }
+   }
+   }
+
+
+
+
