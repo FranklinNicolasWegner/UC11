@@ -7,6 +7,8 @@
  *
  * @author Adm
  */
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
 public class cadastroVIEW extends javax.swing.JFrame {
 
     /**
@@ -141,15 +143,29 @@ public class cadastroVIEW extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         ProdutosDTO produto = new ProdutosDTO();
-        String nome = cadastroNome.getText();
-        String valor = cadastroValor.getText();
-        String status = "A Venda";
-        produto.setNome(nome);
-        produto.setValor(Integer.parseInt(valor));
-        produto.setStatus(status);
+        conectaDAO conectadao = new conectaDAO();
+        PreparedStatement ps = null;
+        String sql = "insert into produtos (nome, valor, status) values (?,?,?)";
         
-        ProdutosDAO produtodao = new ProdutosDAO();
-        produtodao.cadastrarProduto(produto);
+        
+        try{
+            conectadao.Connection();
+            ps = conectadao.conn.prepareStatement(sql);
+        
+            ps.setString(1, cadastroNome.getText());
+            ps.setDouble(2, Double.parseDouble(cadastroValor.getText()));
+            ps.setString(3, "A Venda");
+            
+            ps.executeUpdate();
+            
+            System.out.println( "Dados inseridos com sucesso" );
+        
+        }catch(SQLException e){
+            System.out.println("Falha ao inserir dados");        
+        }
+        
+        
+       
         
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
