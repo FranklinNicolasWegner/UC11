@@ -24,16 +24,9 @@ public class ProdutosDAO {
     ResultSet resultset;
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
     
-    public void cadastrarProduto (ProdutosDTO produto){
-  
-        
-        
-    }
     
-    public ArrayList<ProdutosDTO> getProdutos(){
-        
-        return listagem;
-    }
+    
+  
     
        public List<ProdutosDTO> getProduto(){
        conectaDAO conectadao = new conectaDAO();
