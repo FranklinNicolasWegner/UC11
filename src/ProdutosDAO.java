@@ -33,7 +33,7 @@ public class ProdutosDAO {
        conectadao.Connection();
        
        
-       String sql = "Select produtos.id as id, nome, valor, status from produtos";
+       String sql = "Select produtos.id as id, nome, valor, status from produtos where status = 'A Venda'";
    
    try{
        PreparedStatement stmt = conectadao.conn.prepareStatement(sql);
@@ -48,10 +48,13 @@ public class ProdutosDAO {
            produtosdto.setStatus(rs.getString("status"));
            
            lista.add(produtosdto);
+       
        }
-   return lista;
+       
+       return lista;
+       
    }catch(Exception e){
-       System.out.println(e.getMessage());
+       JOptionPane.showMessageDialog(null, "Erro ao consultar lista");
        return null;
    }
    
@@ -59,6 +62,43 @@ public class ProdutosDAO {
        
    }
     
-        
+        public List<ProdutosDTO> getProdutoVenda(){
+       conectaDAO conectadao = new conectaDAO();
+       conectadao.Connection();
+       
+       
+       String sql = "Select produtos.id as id, nome, valor, status from produtos where status = 'Vendido'";
+   
+   try{
+       PreparedStatement stmt = conectadao.conn.prepareStatement(sql);
+       
+       ResultSet rs = stmt.executeQuery();
+       List<ProdutosDTO> lista = new ArrayList<>();
+       while(rs.next()){
+           ProdutosDTO produtosdto = new ProdutosDTO();
+           produtosdto.setId(rs.getInt("id"));
+           produtosdto.setNome(rs.getString("nome"));
+           produtosdto.setValor(rs.getInt("valor"));
+           produtosdto.setStatus(rs.getString("status"));
+           
+           lista.add(produtosdto);
+       
+       }
+       
+       return lista;
+   
+   }catch(Exception e){
+       JOptionPane.showMessageDialog(null, "Erro ao consultar lista");
+       return null;
+   }
+   
+   
+       
+   }
+
+
+
+
+
 }
 

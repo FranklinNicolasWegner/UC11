@@ -158,12 +158,13 @@ public class cadastroVIEW extends javax.swing.JFrame {
             ps.setString(3, "A Venda");
             
             ps.executeUpdate();
-            
+            conectadao.desconectar();
             JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso" );
         
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Falha ao inserir dados");        
         }
+        
         
         
        

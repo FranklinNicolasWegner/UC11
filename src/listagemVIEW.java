@@ -4,7 +4,9 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-
+import java.sql.Statement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -22,6 +24,7 @@ public class listagemVIEW extends javax.swing.JFrame {
     public listagemVIEW() {
         initComponents();
         preencheTabela();
+        
     }
 
     /**
@@ -139,17 +142,13 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
-        
-        ProdutosDAO produtosdao = new ProdutosDAO();
-        
-        //produtosdao.venderProduto(Integer.parseInt(id));
-        preencheTabela();
+Vender();    
+preencheTabela();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+        Vendas vendas = new Vendas();
+        vendas.setVisible(true);
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -226,7 +225,30 @@ public class listagemVIEW extends javax.swing.JFrame {
        tabelaProdutos.addRow(obj);
        }
    }
+  
+public void Vender(){
+   String sql = "update produtos set status = 'Vendido' where id = " + Integer.valueOf(id_produto_venda.getText());
+    try{
+    conectaDAO conectadao = new conectaDAO();
+    conectadao.Connection();
+    
+    PreparedStatement stmt = conectadao.conn.prepareStatement(sql);
+    
+    
+    stmt.executeUpdate(sql);
+    JOptionPane.showMessageDialog(null, "Vendido");
+   }catch(SQLException e){
+       JOptionPane.showMessageDialog(null, e.getMessage());
    }
+    
+    
+}
+
+
+
+}
+
+
 
 
 
